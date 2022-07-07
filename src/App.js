@@ -4,7 +4,8 @@ import { CameraUtils } from "./utils/CameraUtils";
 import { OrbitControls } from "./OrbitControls";
 import "@mediapipe/pose";
 import * as poseDetection from "@tensorflow-models/pose-detection";
-import { FBXLoader } from "./utils/FBXLoader";
+//import { FBXLoader } from "./utils/FBXLoader";
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 /*
 Credit for 3d model: "Palm Plant" (https://skfb.ly/6VsxQ) by SomeKevin is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
@@ -111,69 +112,14 @@ async function init() {
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
 
-  // walls
-  const planeTop = new THREE.Mesh(
-    planeGeo,
-    new THREE.MeshPhongMaterial({ color: 0xffffff, map: texture })
-  );
-  planeTop.position.y = 100;
-  planeTop.rotateX(Math.PI / 2);
-  planeTop.receiveShadow = true;
-  scene.add(planeTop);
-
-  const planeBottom = new THREE.Mesh(
-    planeGeo,
-    new THREE.MeshPhongMaterial({ color: 0xffffff, map: texture })
-  );
-  planeBottom.rotateX(-Math.PI / 2);
-  planeBottom.receiveShadow = true;
-  scene.add(planeBottom);
-
-  const planeFront = new THREE.Mesh(
-    planeGeo,
-    new THREE.MeshPhongMaterial({ color: 0xffffff, map: texture })
-  );
-  planeFront.position.z = 50;
-  planeFront.position.y = 50;
-  planeFront.rotateY(Math.PI);
-  planeFront.receiveShadow = true;
-  scene.add(planeFront);
-
-  const planeBack = new THREE.Mesh(
-    planeGeo,
-    new THREE.MeshPhongMaterial({ color: 0xffffff, map: texture })
-  );
-  planeBack.position.z = -50;
-  planeBack.position.y = 50;
-  planeBack.receiveShadow = true;
-  scene.add(planeBack);
-
-  const planeRight = new THREE.Mesh(
-    planeGeo,
-    new THREE.MeshPhongMaterial({ color: 0xffffff, map: texture })
-  );
-  planeRight.position.x = 50;
-  planeRight.position.y = 50;
-  planeRight.receiveShadow = true;
-  planeRight.rotateY(-Math.PI / 2);
-  scene.add(planeRight);
-
-  const planeLeft = new THREE.Mesh(
-    planeGeo,
-    new THREE.MeshPhongMaterial({ color: 0xffffff, map: texture })
-  );
-  planeLeft.position.x = -50;
-  planeLeft.position.y = 50;
-  planeLeft.receiveShadow = true;
-  planeLeft.rotateY(Math.PI / 2);
-  scene.add(planeLeft);
-
   /* 3D model */
-  const loader = new FBXLoader();
+  // example: https://sbcode.net/threejs/loaders-gltf/
+  const loader = new GLTFLoader();
   loader.load(
-    `${HOST}/palm-plant/source/Pflanze.fbx`,
+    `${HOST}/chinatown.glb`, // https://alitasci.net/gltf-to-glb-packer/
     function (object) {
       plant = object;
+/*
       plant.traverse(function (child) {
         if (child.isMesh) {
           child.castShadow = true;
@@ -187,22 +133,23 @@ async function init() {
           child.material.needsUpdate = true;
         }
       });
+*/
 
       plant.castShadow = true;
       plant.receiveShadow = false;
       if (touchscreen) {
-        plant.scale.set(0.4, 0.4, 0.35);
+        plant.scene.scale.set(0.4, 0.4, 0.35);
       } else {
-        plant.scale.set(0.22, 0.35, 0.22);
+        plant.scene.scale.set(0.22, 0.35, 0.22);
       }
 
       if (touchscreen) {
-        plant.position.set(0, 0, -30);
+        plant.scene.position.set(50, 0, 0);
       } else {
-        plant.position.set(0, 0, -40);
+        plant.scene.position.set(50, 0, 0);
       }
 
-      scene.add(plant);
+      scene.add(plant.scene);
     },
     undefined,
     function (e) {
