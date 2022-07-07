@@ -129,17 +129,15 @@ async function init() {
 
       plant.castShadow = true;
       plant.receiveShadow = false;
-      if (touchscreen) {
-        plant.scene.scale.set(0.4, 0.4, 0.35);
+      if (false) { //touchscreen) {
+        plant.scene.scale.set(150*0.22, 150*0.35, 150*0.22);
       } else {
         plant.scene.scale.set(150*0.22, 150*0.35, 150*0.22);
 //        plant.scene.scale.set(0.22, 0.35, 0.22);
       }
 
-      if (touchscreen) {
-        //plant.scene.position.set(60, 0, -40);
-        plant.scene.position.set(-140, -300, -800);
-        plant.scene.rotation.set( -THREE.Math.degToRad(15), 0, 0);
+      if (false) { //touchscreen) {
+        plant.scene.position.set(60, 0, -40);
       } else {
         //plant.scene.position.set(eastwest, altitude, -150);
         plant.scene.position.set(-140, -300, -800);
