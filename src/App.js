@@ -14,7 +14,7 @@ Credit for 3d model: "Palm Plant" (https://skfb.ly/6VsxQ) by SomeKevin is licens
 const HOST =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000"
-    : "https://jywarren.github.io";
+    : "https://jywarren.github.io/interactive-frame-tfjs/";
 
 let camera, scene, renderer;
 let cameraControls;
