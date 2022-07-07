@@ -62,8 +62,8 @@ class OrbitControls extends EventDispatcher {
 
     // Set to true to enable damping (inertia)
     // If damping is enabled, you must call controls.update() in your animation loop
-    this.enableDamping = false;
-    this.dampingFactor = 0.05;
+    this.enableDamping = true;
+    this.dampingFactor = 0.6;
 
     // This option actually enables dollying in and out; left as "zoom" for backwards compatibility.
     // Set to false to disable zooming

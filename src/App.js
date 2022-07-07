@@ -4,8 +4,9 @@ import { CameraUtils } from "./utils/CameraUtils";
 import { OrbitControls } from "./OrbitControls";
 import "@mediapipe/pose";
 import * as poseDetection from "@tensorflow-models/pose-detection";
-//import { FBXLoader } from "./utils/FBXLoader";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { FlyControls } from 'three/examples/jsm/controls/FlyControls';
+
 
 /*
 Credit for 3d model: "Palm Plant" (https://skfb.ly/6VsxQ) by SomeKevin is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
@@ -18,6 +19,7 @@ const HOST =
 
 let camera, scene, renderer;
 let cameraControls;
+let controls;
 let bottomLeftCorner, bottomRightCorner, topLeftCorner;
 let detector;
 
@@ -91,6 +93,18 @@ async function init() {
   cameraControls.dispose();
   cameraControls.update();
 
+  // moving around scene?
+  /*
+  controls = new FlyControls( camera, renderer.domElement );
+
+  controls.movementSpeed = 1000;
+  controls.domElement = renderer.domElement;
+  controls.rollSpeed = Math.PI / 24;
+  controls.autoForward = false;
+  controls.dragToLook = false;
+  controls.update();
+  */
+
   bottomLeftCorner = new THREE.Vector3();
   bottomRightCorner = new THREE.Vector3();
   topLeftCorner = new THREE.Vector3();
@@ -105,13 +119,6 @@ async function init() {
     topLeftCorner.set(-50.0, 100.0, -30.0);
   }
 
-  // texture for frame
-  const texture = new THREE.TextureLoader().load(
-    `${HOST}/white-wall-texture.jpeg`
-  );
-  texture.wrapS = THREE.RepeatWrapping;
-  texture.wrapT = THREE.RepeatWrapping;
-
   /* 3D model */
   // example: https://sbcode.net/threejs/loaders-gltf/
   const loader = new GLTFLoader();
@@ -119,37 +126,28 @@ async function init() {
     `${HOST}/chinatown.glb`, // https://alitasci.net/gltf-to-glb-packer/
     function (object) {
       plant = object;
-/*
-      plant.traverse(function (child) {
-        if (child.isMesh) {
-          child.castShadow = true;
-          child.receiveShadow = false;
-
-          const texture = new THREE.TextureLoader().load(
-            `${HOST}/palm-plant/textures/Pflanze_Albedo.png`
-          );
-
-          child.material.map = texture;
-          child.material.needsUpdate = true;
-        }
-      });
-*/
 
       plant.castShadow = true;
       plant.receiveShadow = false;
       if (touchscreen) {
         plant.scene.scale.set(0.4, 0.4, 0.35);
       } else {
-        plant.scene.scale.set(0.22, 0.35, 0.22);
+        plant.scene.scale.set(150*0.22, 150*0.35, 150*0.22);
+//        plant.scene.scale.set(0.22, 0.35, 0.22);
       }
 
       if (touchscreen) {
         plant.scene.position.set(60, 0, -40);
       } else {
-        plant.scene.position.set(60, 0, -40);
+        //plant.scene.position.set(eastwest, altitude, -150);
+        plant.scene.position.set(-140, -300, -800);
+        plant.scene.rotation.set( -THREE.Math.degToRad(15), 0, 0);
+        // chinatown-sketchfab.glb
+        // plant.scene.position.set(60, 0, -40);
       }
 
       scene.add(plant.scene);
+
     },
     undefined,
     function (e) {

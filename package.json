@@ -5,6 +5,7 @@
   "main": "index.js",
   "author": "Charlie Gerard",
   "license": "ISC",
+  "homepage": "/interactive-frame-tfjs/",
   "dependencies": {
     "@mediapipe/pose": "^0.4.1624666670",
     "@tensorflow-models/pose-detection": "0.0.3",
