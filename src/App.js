@@ -137,7 +137,9 @@ async function init() {
       }
 
       if (touchscreen) {
-        plant.scene.position.set(60, 0, -40);
+        //plant.scene.position.set(60, 0, -40);
+        plant.scene.position.set(-140, -300, -800);
+        plant.scene.rotation.set( -THREE.Math.degToRad(15), 0, 0);
       } else {
         //plant.scene.position.set(eastwest, altitude, -150);
         plant.scene.position.set(-140, -300, -800);
