@@ -144,9 +144,9 @@ async function init() {
       }
 
       if (touchscreen) {
-        plant.scene.position.set(50, 0, 0);
+        plant.scene.position.set(60, 0, -40);
       } else {
-        plant.scene.position.set(50, 0, 0);
+        plant.scene.position.set(60, 0, -40);
       }
 
       scene.add(plant.scene);
